@@ -83,7 +83,7 @@ class PrayerCall:
         """
         # Create the next prayer time with the right date and target time
         updated_end_time = time.struct_time((end_time.tm_year, end_time.tm_mon, end_time.tm_mday,
-                                         target_time.hour, target_time.minute, end_time.tm_sec,
+                                         target_time.hour, target_time.minute, 00,
                                          end_time.tm_wday, end_time.tm_yday,
                                          end_time.tm_isdst))
         updated_start_time = time.struct_time((start_time.tm_year, start_time.tm_mon, start_time.tm_mday,
@@ -92,7 +92,7 @@ class PrayerCall:
                                          start_time.tm_isdst))
 
         # Calculate how many seconds are remaining till next prayer time
-        return tm.mktime(updated_end_time) - tm.mktime(updated_start_time) - 30
+        return tm.mktime(updated_end_time) - tm.mktime(updated_start_time) - start_time.tm_sec + 5
 
     def print_remaining_to_next_prayer(self, seconds: int) -> str:
         hours, remainder = divmod(seconds, 3600)
